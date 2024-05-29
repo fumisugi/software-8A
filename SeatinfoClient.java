@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 public class SeatinfoClient extends JFrame {
     private static final String SERVER_ADDRESS = "127.0.0.1"; // サーバーのIPアドレスに変更
     private static final int SERVER_PORT = 32000;
@@ -33,7 +36,20 @@ public class SeatinfoClient extends JFrame {
     private Timer refreshTimer;
 
     public SeatinfoClient() {
-        setTitle("Searinfo Client");
+        // Look and Feel を Metal に設定
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        setTitle("Seatinfo Client");
         setSize(600, 600); // ウィンドウの高さを固定
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         // フォントの設定
@@ -58,6 +74,8 @@ public class SeatinfoClient extends JFrame {
             for (int j = 0; j < GRID_SIZE; j++) {
                 int seatNumber = i * GRID_SIZE + j + 1;
                 seatButtons[i][j] = new JButton(String.valueOf(seatNumber));
+                seatButtons[i][j].setOpaque(true); // 不透明に設定
+                seatButtons[i][j].setBorderPainted(false); // 境界線を描画しない
                 seatButtons[i][j].setBackground(lightGray); // 薄いグレーを設定
                 seatButtons[i][j].setFont(seatFont); // フォントを設定
                 seatButtons[i][j].addActionListener(new SeatButtonListener(seatNumber));
@@ -65,7 +83,6 @@ public class SeatinfoClient extends JFrame {
             }
         }
         mainPanel.add(gridPanel, BorderLayout.CENTER);
-
 
         add(mainPanel);
 
