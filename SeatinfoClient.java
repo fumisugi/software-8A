@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class SeatinfoClient extends JFrame {
     private static final String SERVER_ADDRESS = "127.0.0.1"; // サーバーのIPアドレスに変更
@@ -33,6 +35,19 @@ public class SeatinfoClient extends JFrame {
     private Timer refreshTimer;
 
     public SeatinfoClient() {
+        // Look and Feel を Metal に設定
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         setTitle("Searinfo Client");
         setSize(600, 600); // ウィンドウの高さを固定
         setDefaultCloseOperation(EXIT_ON_CLOSE);
